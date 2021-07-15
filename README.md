@@ -48,6 +48,11 @@ Pure HTML5? Less? Modernizr? Flexbox? Bootstrap?
 ### Setup
 
 #### On Windows
-- [Install NVS](https://github.com/jasongin/nvs)
-- `$ nvs install lts && nvs link lts`
-- `$ npm install vue konva`
+- [Install NVS](https://github.com/jasongin/nvs) (Node Version Switcher)
+- Install latest node LTS + add it your PATH: `$ nvs install lts && nvs link lts`
+- Install project dependencies: `$ npm i`
+
+### Run
+Actions are all listed in the [package.json](package.json) "scripts" object.
+- Start as server: `$ npm run serve`
+- Build as static: `$ npm run build`
