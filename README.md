@@ -41,3 +41,13 @@ Pure HTML5? Less? Modernizr? Flexbox? Bootstrap?
 
 - WebGL
 - ThreeJS
+
+
+## Contribute
+
+### Setup
+
+#### On Windows
+- [Install NVS](https://github.com/jasongin/nvs)
+- `$ nvs install lts && nvs link lts`
+- `$ npm install vue konva`
