@@ -33,10 +33,20 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import IGame from '@/game/IGame';
+import Game from '@/game/impl/Game';
+import ERenderEngine from '@/game/render/ERenderEngine';
 
 @Component
-export default class HelloWorld extends Vue {
+export default class GameView extends Vue {
   @Prop() private msg!: string;
+  private game!: IGame;
+
+  constructor() {
+    super();
+    this.game = new Game(ERenderEngine.VueKanva, '#app');
+  }
+
 }
 </script>
 
