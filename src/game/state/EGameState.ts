@@ -1,6 +1,4 @@
-enum EGameState {
-    Paused,
-    
-}
+export enum EGameState {
+  Paused,
 
-export default EGameState;
+}

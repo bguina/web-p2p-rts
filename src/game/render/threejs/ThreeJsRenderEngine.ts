@@ -1,16 +1,14 @@
 import IGameState from "@/game/state/IGameState";
-import IRenderEngine from "@/game/render/IRenderEngine";
+import { IRenderEngine } from "@/game/render/IRenderEngine";
 
-class ThreeJsRenderEngine implements IRenderEngine {
-    selector: string;
+export default class implements IRenderEngine {
+  selector: string;
 
-    constructor(canvasSelector: string) {
-        this.selector = canvasSelector
-    }
+  constructor(canvasSelector: string) {
+    this.selector = canvasSelector
+  }
 
-    render(state: IGameState): boolean {
-        throw new Error("Method not implemented.");
-    }
+  render(state: IGameState): boolean {
+    throw new Error("Method not implemented.");
+  }
 }
-
-export default ThreeJsRenderEngine;

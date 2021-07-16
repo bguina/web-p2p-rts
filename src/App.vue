@@ -1,19 +1,19 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <GameCanvas msg="Welcome to Your Vue.js + TypeScript App"/>
+    <GameView msg="Welcome to Your Vue.js + TypeScript App"/>
     <GameRenderEngineSelector/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import GameCanvas from './components/GameContainer.vue';
+import GameView from './components/GameView.vue';
 import GameRenderEngineSelector from './components/GameRenderEngineSelector.vue';
 
 @Component({
   components: {
-    GameCanvas,
+    GameView,
     GameRenderEngineSelector,
   },
 })

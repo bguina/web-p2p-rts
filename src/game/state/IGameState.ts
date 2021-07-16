@@ -1,7 +1,7 @@
-import EGameState from "@/game/state/EGameState";
+import { EGameState } from "@/game/state/EGameState";
 
 interface IGameState {
-    value: EGameState;
+  value: EGameState;
 }
 
 export default IGameState;
