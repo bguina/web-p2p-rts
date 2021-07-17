@@ -1,32 +1,35 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <GameView msg="Welcome to Your Vue.js + TypeScript App"/>
-    <GameRenderEngineSelector/>
+    <header class="engine-selector">
+      <div class="engine-option" v-for="link in links" :key="link.engine">
+        <router-link :to="{ name: link.name, params: { engine: link.engine } }">
+          {{ link.name }}
+        </router-link>
+      </div>
+    </header>
+    <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import GameView from './components/GameView.vue';
-import GameRenderEngineSelector from './components/GameRenderEngineSelector.vue';
+import { ERenderEngine } from './game/render/ERenderEngine';
+
+type Link = {
+  name: string,
+  engine: ERenderEngine
+}
 
 @Component({
   components: {
     GameView,
-    GameRenderEngineSelector,
   },
 })
-export default class App extends Vue {}
-</script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+export default class App extends Vue {
+  private links: Link[] = [
+    { name: 'konva', engine: ERenderEngine.VueKonva },
+    { name: 'threejs', engine: ERenderEngine.ThreeJs }
+  ]
 }
-</style>
+</script>
