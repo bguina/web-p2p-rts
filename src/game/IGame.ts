@@ -1,6 +1,5 @@
-export interface IGame {
+export default interface IGame {
   title: string;
 
 }
 
-export default IGame;

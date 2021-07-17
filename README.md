@@ -51,7 +51,8 @@ Pure HTML5? Less? Modernizr? Flexbox? Bootstrap?
 #### On Windows
 - [Install NVS](https://github.com/jasongin/nvs) (Node Version Switcher)
 - Install latest node LTS + add it your PATH: `$ nvs install lts && nvs link lts`
-- Install project dependencies: `$ npm i`
+- Install Yarn: `npm install -g yarn`
+- Install project dependencies: `$ yarn install`
 
 ### Git flow
 

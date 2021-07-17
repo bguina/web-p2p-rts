@@ -20,3 +20,7 @@ export default class GameView extends Vue {
   }
 }
 </script>
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
+</style>

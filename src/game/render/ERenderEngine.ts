@@ -1,11 +1,10 @@
-import { IRenderEngine } from "./IRenderEngine";
+import IRenderEngine from "./IRenderEngine";
 import ThreeJsRenderEngine from "./threejs/ThreeJsRenderEngine";
 import VueKonvaRenderEngine from "./vuekonva/VueKonvaRenderEngine";
 
 type CanvasSelector = string
 
 type EngineFactory = (sel: CanvasSelector) => IRenderEngine
-type EngineDestructor = (engine: IRenderEngine) => void
 
 export enum ERenderEngine {
   VueKonva,
