@@ -18,8 +18,9 @@ Peer-to-peer real time strategy game in your web browser.
 
 We are still unsure about the techs we want to use. This is why is it crucial to only rely on business-driven modelisation of the project through models + interfaces (versus building around library components) by extensively using dependency injection.
 
-- Define interfaces in javascript -> js is poorly typed. Use client-side typescript?
-- Choose a DI library / patterns.
+Choose among:
+- [InversifyJS](https://inversify.io/) (a [bit of introduction](https://nehalist.io/dependency-injection-in-typescript/#dependencyinjectionintypescript]))
+- [tsyringe](https://github.com/microsoft/tsyringe)
 
 ## Static layout
 
@@ -50,7 +51,12 @@ Pure HTML5? Less? Modernizr? Flexbox? Bootstrap?
 #### On Windows
 - [Install NVS](https://github.com/jasongin/nvs) (Node Version Switcher)
 - Install latest node LTS + add it your PATH: `$ nvs install lts && nvs link lts`
-- Install project dependencies: `$ npm i`
+- Install Yarn: `npm install -g yarn`
+- Install project dependencies: `$ yarn install`
+
+### Git flow
+
+Prefix your commit messages with [an appropriate icon](https://gitmoji.dev/).
 
 ### Run
 Actions are all listed in the [package.json](package.json) "scripts" object.
