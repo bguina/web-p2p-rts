@@ -1,8 +1,6 @@
 <template>
   <div class="game-view">
-    <h1>{{ game.title }}</h1>
-
-    <canvas id="game-canvas"></canvas>
+    <div id="game-canvas"></div>
   </div>
 </template>
 
@@ -15,9 +13,10 @@ import { ERenderEngine } from '@/game/render/ERenderEngine';
 @Component
 export default class GameView extends Vue {
   @Prop() engine!: ERenderEngine;
+  private game!: IGame;
 
-  get game(): IGame {
-    return new Game(this.engine, '#game-canvas')
+  mounted() {
+    this.game = new Game(this.engine, '#game-canvas');
   }
 }
 </script>

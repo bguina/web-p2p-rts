@@ -1,17 +1,18 @@
 import { RouteConfig } from 'vue-router';
 import VueRouter from 'vue-router';
+import { ERenderEngine } from '@/game/render/ERenderEngine';
 import GameView from '@/components/GameView.vue';
 
-const makeRoute = (name: string): RouteConfig => ({
+const makeRoute = (name: string, engine: ERenderEngine): RouteConfig => ({
   name,
   path: `/${name}`,
   component: GameView,
-  props: route => ({ engine: route.params.engine })
-})
+  props: { engine }
+});
 
 export default new VueRouter({
   routes: [
-    makeRoute('konva'),
-    makeRoute('threejs')
+    makeRoute('konva', ERenderEngine.VueKonva),
+    makeRoute('threejs', ERenderEngine.ThreeJs)
   ]
-})
+});

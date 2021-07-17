@@ -8,7 +8,7 @@ export default class implements IRenderEngine {
     this.selector = canvasSelector
   }
 
-  render(state: IGameState): boolean {
+  update(state: IGameState): void {
     throw new Error("Method not implemented.");
   }
 }
