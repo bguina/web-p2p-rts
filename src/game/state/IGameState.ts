@@ -1,6 +1,7 @@
-import { EGameState } from "@/game/state/EGameState";
+import EGameState from "@/game/state/EGameState";
+import IGameObject from "../object/IGameObject";
 
 export default interface IGameState {
   value: EGameState;
-  units: Array<any>
+  objects: Array<IGameObject>;
 }

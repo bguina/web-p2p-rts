@@ -1,6 +1,5 @@
 <template>
-  <div class="game-view">
-    <div id="game-canvas"></div>
+  <div id="game-view">
   </div>
 </template>
 
@@ -8,7 +7,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import IGame from '@/game/IGame';
 import Game from '@/game/impl/Game';
-import { ERenderEngine } from '@/game/render/ERenderEngine';
+import ERenderEngine from '@/game/render/ERenderEngine';
 
 @Component
 export default class GameView extends Vue {
@@ -16,8 +15,9 @@ export default class GameView extends Vue {
   private game!: IGame;
 
   mounted() {
-    this.game = new Game(this.engine, '#game-canvas');
+    this.game = new Game(this.engine, '#game-view');
   }
+
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
