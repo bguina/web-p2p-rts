@@ -13,7 +13,7 @@ export default class implements IGame {
     renderEngine: ERenderEngine,
     canvaSelector: string
   ) {
-    this.title = "RTS alpha"
+    this.title = `RTS engine ${renderEngine}`
     this.renderEngine = engineBuilder[renderEngine](canvaSelector);
   }
 }
