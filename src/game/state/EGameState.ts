@@ -1,6 +1,7 @@
 enum EGameState {
-  Paused,
-
+  Menu,
+  InGame,
+  
 }
 
 export default EGameState
