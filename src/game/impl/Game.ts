@@ -2,7 +2,6 @@ import IGame from '@/game/IGame'
 import IGameState from '@/game/state/IGameState';
 import ERenderEngine from '@/game/render/ERenderEngine';
 import IRenderEngine from '@/game/render/IRenderEngine';
-import PausedGameState from '@/game/state/impl/PausedGameState';
 import renderEngineBuilder from '../render/RenderEngineBuilder';
 import TestGameState from '../state/impl/TestGameState';
 
@@ -21,7 +20,7 @@ export default class implements IGame {
     window.requestAnimationFrame((time)=>{this.loop(time)});
   }
 
-  loop(timestamp: number) {
+  loop(timestamp: number) : void {
     this.renderEngine.update(this.state);
   
     this.lastRender = timestamp
