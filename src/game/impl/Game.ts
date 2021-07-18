@@ -17,14 +17,14 @@ export default class implements IGame {
   ) {
     this.title = `RTS engine ${renderEngine}`
     this.renderEngine = renderEngineBuilder[renderEngine](canvaSelector);
-    window.requestAnimationFrame((time)=>{this.loop(time)});
+    window.requestAnimationFrame((time) => { this.loop(time) });
   }
 
-  loop(timestamp: number) : void {
+  loop(timestamp: number): void {
     this.renderEngine.update(this.state);
-  
+
     this.lastRender = timestamp
-    window.requestAnimationFrame((time)=>{this.loop(time)});
+    window.requestAnimationFrame((time) => { this.loop(time) });
   }
 
 }

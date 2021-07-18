@@ -1,8 +1,8 @@
-import Vector3f from "./Vector3f";
+import Vector3f from "../../math/Vector3f";
 
 export default interface IGameObject {
   title: string;
   position: Vector3f;
-  dimension: Array<number>;
+  dimension: Vector3f;
 
 }
