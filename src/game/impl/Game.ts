@@ -1,30 +1,53 @@
+import { inject, injectable } from "inversify";
+import DI_TYPES from '@/inversify.types';
 import IGame from '@/game/IGame'
-import IGameState from '@/game/state/IGameState';
-import ERenderEngine from '@/game/render/ERenderEngine';
+import GameStateMachine from './GameStateMachine';
+import EGameState from './EGameState';
+import IGameEngine from '@/game/IGameEngine';
+import INetworkEngine from '@/game/net/INetworkEngine';
 import IRenderEngine from '@/game/render/IRenderEngine';
-import renderEngineBuilder from '../render/RenderEngineBuilder';
-import TestGameState from '../state/impl/TestGameState';
+import GameSnapshot from "./GameSnapshot";
 
-export default class implements IGame {
-  title: string;
-  private renderEngine: IRenderEngine;
-  private state: IGameState = new TestGameState();
-  private lastRender = 0
+@injectable()
+export default class Game implements IGame {
+  readonly title: string = 'Some RTS';
+  private tickRequestHndl = 0;
+  private sm: GameStateMachine;
 
   constructor(
-    renderEngine: ERenderEngine,
-    canvaSelector: string
+    @inject(DI_TYPES.NetworkEngine) private readonly networkEngine: INetworkEngine,
+    @inject(DI_TYPES.GameEngine) private readonly gameEngine: IGameEngine,
+    @inject(DI_TYPES.RenderEngine) private readonly renderEngine: IRenderEngine
   ) {
-    this.title = `RTS engine ${renderEngine}`
-    this.renderEngine = renderEngineBuilder[renderEngine](canvaSelector);
-    window.requestAnimationFrame((time) => { this.loop(time) });
+    this.sm = new GameStateMachine(gameEngine);
+    this.sm.onEnter(EGameState.InGame, (_?: EGameState) => { return this.onGameStart(); });
+    this.sm.onExit(EGameState.InGame, (_?: EGameState) => { return this.onGameStop(); });
+
+    this.sm.go(EGameState.Lobby);
+
+    // load dummy snapshot
+    gameEngine.restoreGameSave(new GameSnapshot());
+    
+    this.sm.go(EGameState.InGame);
   }
 
-  loop(timestamp: number): void {
-    this.renderEngine.update(this.state);
+  private onGameStart(): boolean {
+    this.tickLoop();
+    return this.renderEngine.resume();
+  }
 
-    this.lastRender = timestamp
-    window.requestAnimationFrame((time) => { this.loop(time) });
+  private onGameStop(): boolean {
+    window.cancelAnimationFrame(this.tickRequestHndl);
+    return this.renderEngine.pause();
+  }
+
+  private tickLoop() : void {
+    this.tick();
+    this.tickRequestHndl = window.requestAnimationFrame((time) => { this.tickLoop() });
+  }
+
+  private tick(): void {
+    this.renderEngine.updateSnapshot(this.gameEngine.getLastSnapshot());
   }
 
 }

@@ -1,6 +1,8 @@
 enum EGameState {
   Menu,
+  Lobby,
   InGame,
+  Scoreboard,
   
 }
 

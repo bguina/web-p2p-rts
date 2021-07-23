@@ -6,8 +6,11 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import IGame from '@/game/IGame';
-import Game from '@/game/impl/Game';
 import ERenderEngine from '@/game/render/ERenderEngine';
+import renderEngineBuilder from '@/game/render/RenderEngineBuilder';
+import container from "@/inversify.config";
+import IRenderEngine from "@/game/render/IRenderEngine";
+import TYPES from "../inversify.types";
 
 @Component
 export default class GameView extends Vue {
@@ -15,12 +18,14 @@ export default class GameView extends Vue {
   private game!: IGame;
 
   mounted() {
-    this.game = new Game(this.engine, '#game-view');
+    const renderEngine = renderEngineBuilder[this.engine]('#game-view')
+    container.bind<IRenderEngine>(TYPES.RenderEngine).toConstantValue(renderEngine);
+    this.game = container.get<IGame>(TYPES.Game);
   }
 
 }
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
 
 </style>

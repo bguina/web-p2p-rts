@@ -1,0 +1,19 @@
+{
+    "[javascript]": {
+        "editor.tabSize": 2
+    },
+    "[ts]": {
+        "editor.tabSize": 2
+    },
+    "[typescript]": {
+        "editor.tabSize": 2
+    },
+    "[vue]": {
+        "editor.tabSize": 2
+    },
+    "[makefile]": {
+        "editor.insertSpaces": false,
+        "editor.tabSize": 4
+    },
+    "editor.detectIndentation": false,
+}
