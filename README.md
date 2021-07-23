@@ -4,11 +4,11 @@ Peer-to-peer real time strategy game in your web browser.
 
 ## Target product
 
-- Serverless
+- <s>Serverless</s> No solution for being free of any server from a web page.
 - Fluid
 - Highly replayable
 - Easy to learn and difficult to master
-- Sandbox mode
+- Sandbox / testing mode
 
 ### To be defined:
 - Max number of players
@@ -16,33 +16,21 @@ Peer-to-peer real time strategy game in your web browser.
 
 ## Dependency injection
 
-We are still unsure about the techs we want to use. This is why is it crucial to only rely on business-driven modelisation of the project through models + interfaces (versus building around library components) by extensively using dependency injection.
+We build the dependency components tree using [InversifyJS](https://inversify.io/).  
+Their types are [enumerated](src/inversify.types.ts) and bound by our custom [Inversify Container](src/inversify.config.ts).
 
-Choose among:
-- [InversifyJS](https://inversify.io/) (a [bit of introduction](https://nehalist.io/dependency-injection-in-typescript/#dependencyinjectionintypescript]))
-- [tsyringe](https://github.com/microsoft/tsyringe)
+## Game rendering
 
-## Static layout
+The page is rendered with VueJS.  
+The game canvas is drawn using a loosely coupled library (Konva for now).
 
-Pure HTML5? Less? Modernizr? Flexbox? Bootstrap?
+## Game engine
 
-## Real-time communication (RTC)
+> TODO
 
-- WebRTC
+## Game networking
 
-## View
-
-> We might change the view layer later.
-
-#### Proof of concept / testing playground
-
-[VueJS + Konva](https://github.com/konvajs/vue-konva).
-
-#### Possibly upcoming
-
-- WebGL
-- ThreeJS
-
+> TODO: Most probably WebRTC.
 
 ## Contribute
 
