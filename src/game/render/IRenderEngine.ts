@@ -5,6 +5,7 @@ export default interface IRenderEngine {
   pause() : boolean;
 
   updateSnapshot(
-    snapshot: IGameSnapshot
+    uiTree?: string,
+    snapshot?: IGameSnapshot
   ): void;
 }

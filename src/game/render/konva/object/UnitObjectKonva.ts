@@ -12,6 +12,8 @@ export default class UnitObjectKonva extends Konva.Group {
     super({
       x: object.position[0],
       y: object.position[1],
+      offsetX: object.dimension[0] / 2,
+      offsetY: object.dimension[1] / 2,
     });
     this.objectUid = object.uid;
 

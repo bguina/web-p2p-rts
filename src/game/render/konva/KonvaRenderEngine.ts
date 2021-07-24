@@ -1,24 +1,26 @@
 import IGameSnapshot from "@/game/IGameSnapshot";
-import IGameObject from "@/game/object/IGameObject";
+import IInputController from "@/game/input/IInputController";
 import IRenderEngine from "@/game/render/IRenderEngine";
+import DI_TYPES from "@/inversify.types";
+import { inject, injectable } from "inversify";
 import Konva from "konva";
 import UnitObjectKonva from "./object/UnitObjectKonva";
+import KonvaNamedEvent from "./KonvaNamedEvent";
 
+@injectable()
 export default class VueKonvaRenderEngine implements IRenderEngine {
   private frameRequestHndl = 0;
   private stage!: Konva.Stage;
-  private mapLayer: Konva.Layer = new Konva.Layer({
-    id: "Map"
-  });
-  private uiLayer: Konva.Layer = new Konva.Layer({
-    id: "Ui"
-  });
-  private timestampText: Konva.Text = new Konva.Text();
+  private mapLayer: Konva.Layer = new Konva.Layer({ id: "Map" });
+  private uiLayer: Konva.Layer = new Konva.Layer({ id: "Ui" });
+  private debugText: Konva.Text = new Konva.Text({ fill: 'white' });
+  private timestampText: Konva.Text = new Konva.Text({ fill: 'white' });
   private snapshot?: IGameSnapshot
   private mappedObjects: Map<number, UnitObjectKonva> = new Map<number, UnitObjectKonva>();
 
   constructor(
-    canvasSelector: string
+    @inject(DI_TYPES.InputController) private inputController: IInputController,
+    @inject(DI_TYPES.CanvasSelector) canvasSelector: string
   ) {
     this.setupStage(canvasSelector);
     this.setupBackground();
@@ -36,8 +38,12 @@ export default class VueKonvaRenderEngine implements IRenderEngine {
   }
 
   updateSnapshot(
-    snapshot: IGameSnapshot
+    uiTree?: string,
+    snapshot?: IGameSnapshot
   ): void {
+    if (undefined != uiTree) {
+      this.debugText.setText(uiTree);
+    }
     this.snapshot = snapshot;
   }
 
@@ -52,6 +58,14 @@ export default class VueKonvaRenderEngine implements IRenderEngine {
     });
     this.stage.add(this.mapLayer);
     this.stage.add(this.uiLayer);
+
+    this.stage.on('contextmenu', (e) => { e.evt.preventDefault(); });
+    Object.values(KonvaNamedEvent).forEach(eventName => {
+      this.stage.addEventListener(eventName as string, e => {
+        if (this.onKonvaEvent(eventName, e))
+          e.preventDefault();
+      });
+    });
   }
 
   private setupBackground() {
@@ -68,6 +82,38 @@ export default class VueKonvaRenderEngine implements IRenderEngine {
 
   private setupUi() {
     this.uiLayer.add(this.timestampText);
+    this.uiLayer.add(this.debugText);
+  }
+
+  private onKonvaEvent(eventName: KonvaNamedEvent, e: Event): boolean {
+    switch (eventName) {
+      case KonvaNamedEvent.MOUSE_OVER:
+        this.assertIsEventType<MouseEvent>(e);
+        return this.inputController.mouseMove(e.screenX, e.screenY);
+      case KonvaNamedEvent.MOUSE_OUT:
+        this.assertIsEventType<MouseEvent>(e);
+        return this.inputController.mouseMove(-1, -1);
+      case KonvaNamedEvent.MOUSE_MOVE:
+        this.assertIsEventType<MouseEvent>(e);
+        return this.inputController.mouseMove(e.screenX, e.screenY);
+      case KonvaNamedEvent.MOUSE_DOWN:
+        this.assertIsEventType<MouseEvent>(e);
+        return this.inputController.mouseClickDown(e.button, e.screenX, e.screenY);
+      case KonvaNamedEvent.MOUSE_UP:
+        this.assertIsEventType<MouseEvent>(e);
+        return this.inputController.mouseClickUp(e.button, e.screenX, e.screenY);
+      case KonvaNamedEvent.KEY_DOWN:
+        this.assertIsEventType<KeyboardEvent>(e);
+        return this.inputController.pressKey(e.keyCode)
+      case KonvaNamedEvent.KEY_UP:
+        this.assertIsEventType<KeyboardEvent>(e);
+        return this.inputController.releaseKey(e.keyCode)
+    }
+  }
+
+  private assertIsEventType<T>(e: any): asserts e is T {
+    if (null == e as T)
+      throw `expected a Konva.KeyboardEvent, got ${typeof e}`;
   }
 
   private tickDrawLoop() {
@@ -78,7 +124,7 @@ export default class VueKonvaRenderEngine implements IRenderEngine {
   }
 
   private drawFrame() {
-    this.snapshot?.objects?.forEach(object=>{
+    this.snapshot?.objects?.forEach(object => {
       const asMappedObject = this.mappedObjects.get(object.uid);
       if (asMappedObject != undefined) {
         asMappedObject.update(object);
@@ -99,6 +145,8 @@ export default class VueKonvaRenderEngine implements IRenderEngine {
       }
     })
     this.timestampText.setText(Date.now().toString());
+    this.debugText.y(this.timestampText.height());
+
   }
 
 }

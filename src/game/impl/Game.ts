@@ -7,6 +7,7 @@ import IGameEngine from '@/game/IGameEngine';
 import INetworkEngine from '@/game/net/INetworkEngine';
 import IRenderEngine from '@/game/render/IRenderEngine';
 import GameSnapshot from "./GameSnapshot";
+import IInputController from "../input/IInputController";
 
 @injectable()
 export default class Game implements IGame {
@@ -15,6 +16,7 @@ export default class Game implements IGame {
   private sm: GameStateMachine;
 
   constructor(
+    @inject(DI_TYPES.InputController) private readonly inputController: IInputController,
     @inject(DI_TYPES.NetworkEngine) private readonly networkEngine: INetworkEngine,
     @inject(DI_TYPES.GameEngine) private readonly gameEngine: IGameEngine,
     @inject(DI_TYPES.RenderEngine) private readonly renderEngine: IRenderEngine
@@ -47,7 +49,7 @@ export default class Game implements IGame {
   }
 
   private tick(): void {
-    this.renderEngine.updateSnapshot(this.gameEngine.getLastSnapshot());
+    this.renderEngine.updateSnapshot(this.inputController.lastEvent, this.gameEngine.getLastSnapshot());
   }
 
 }
