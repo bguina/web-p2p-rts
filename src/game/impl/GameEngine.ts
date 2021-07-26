@@ -6,7 +6,8 @@ import IGameSnapshot from "../IGameSnapshot";
 export default class GameEngine implements IGameEngine {
   private snapshots: Array<IGameSnapshot> = []
 
-  getLastSnapshot() : IGameSnapshot {
+  get lastSnapshot() {
+    if (0 == this.snapshots.length) return undefined;
     return this.snapshots[this.snapshots.length - 1];
   }
 

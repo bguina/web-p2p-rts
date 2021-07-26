@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify";
-import DI_TYPES from '@/inversify.types';
+import DI_TYPES from '../../inversify.types';
 import IGame from '@/game/IGame'
 import GameStateMachine from './GameStateMachine';
 import EGameState from './EGameState';
@@ -8,10 +8,12 @@ import INetworkEngine from '@/game/net/INetworkEngine';
 import IRenderEngine from '@/game/render/IRenderEngine';
 import GameSnapshot from "./GameSnapshot";
 import IInputController from "../input/IInputController";
+import IWindow from "@/window/IWindow";
 
 @injectable()
 export default class Game implements IGame {
-  readonly title: string = 'Some RTS';
+  get title(): string { return `Some RTS using ${this.renderEngine.name}` }
+  get state(): EGameState { return this.sm.currentState; }
   private tickRequestHndl = 0;
   private sm: GameStateMachine;
 
@@ -19,7 +21,8 @@ export default class Game implements IGame {
     @inject(DI_TYPES.InputController) private readonly inputController: IInputController,
     @inject(DI_TYPES.NetworkEngine) private readonly networkEngine: INetworkEngine,
     @inject(DI_TYPES.GameEngine) private readonly gameEngine: IGameEngine,
-    @inject(DI_TYPES.RenderEngine) private readonly renderEngine: IRenderEngine
+    @inject(DI_TYPES.RenderEngine) private readonly renderEngine: IRenderEngine,
+    @inject(DI_TYPES.Window) private readonly window: IWindow
   ) {
     this.sm = new GameStateMachine(gameEngine);
     this.sm.onEnter(EGameState.InGame, (_?: EGameState) => { return this.onGameStart(); });
@@ -29,7 +32,7 @@ export default class Game implements IGame {
 
     // load dummy snapshot
     gameEngine.restoreGameSave(new GameSnapshot());
-    
+
     this.sm.go(EGameState.InGame);
   }
 
@@ -39,17 +42,17 @@ export default class Game implements IGame {
   }
 
   private onGameStop(): boolean {
-    window.cancelAnimationFrame(this.tickRequestHndl);
+    this.window.cancelAnimationFrame(this.tickRequestHndl);
     return this.renderEngine.pause();
   }
 
-  private tickLoop() : void {
+  private tickLoop(): void {
     this.tick();
-    this.tickRequestHndl = window.requestAnimationFrame((time) => { this.tickLoop() });
+    this.tickRequestHndl = this.window.requestAnimationFrame((time) => { this.tickLoop() });
   }
 
   private tick(): void {
-    this.renderEngine.updateSnapshot(this.inputController.lastEvent, this.gameEngine.getLastSnapshot());
+    this.renderEngine.updateSnapshot(this.inputController.lastEvent, this.gameEngine.lastSnapshot);
   }
 
 }

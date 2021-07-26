@@ -1,10 +1,10 @@
 const DI_TYPES = {
   RenderEngine: Symbol("RenderEngine"),
   NetworkEngine: Symbol("NetworkEngine"),
-  GameStateMachine: Symbol("GameEngine"),
   GameEngine: Symbol("GameEngine"),
   InputController: Symbol("InputController"),
   Game: Symbol("Game"),
+  Window: Symbol("Window"),
   CanvasSelector: Symbol("CanvasSelector"),
 };
 

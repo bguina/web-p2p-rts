@@ -1,7 +1,7 @@
 import IGameSnapshot from "./IGameSnapshot";
 
 export default interface IGameEngine {
-  getLastSnapshot() : IGameSnapshot
+  readonly lastSnapshot?: IGameSnapshot
 
   restoreGameSave(
     snapshot: IGameSnapshot

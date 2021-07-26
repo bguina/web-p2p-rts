@@ -6,9 +6,11 @@ import { inject, injectable } from "inversify";
 import Konva from "konva";
 import UnitObjectKonva from "./object/UnitObjectKonva";
 import KonvaNamedEvent from "./KonvaNamedEvent";
+import IWindow from "@/window/IWindow";
 
 @injectable()
 export default class VueKonvaRenderEngine implements IRenderEngine {
+  get name(): string { return "Konva"; }
   private frameRequestHndl = 0;
   private stage!: Konva.Stage;
   private mapLayer: Konva.Layer = new Konva.Layer({ id: "Map" });
@@ -19,8 +21,9 @@ export default class VueKonvaRenderEngine implements IRenderEngine {
   private mappedObjects: Map<number, UnitObjectKonva> = new Map<number, UnitObjectKonva>();
 
   constructor(
+    @inject(DI_TYPES.Window) private readonly window: IWindow,
     @inject(DI_TYPES.InputController) private inputController: IInputController,
-    @inject(DI_TYPES.CanvasSelector) canvasSelector: string
+    @inject(DI_TYPES.CanvasSelector) canvasSelector: HTMLDivElement
   ) {
     this.setupStage(canvasSelector);
     this.setupBackground();
@@ -33,7 +36,7 @@ export default class VueKonvaRenderEngine implements IRenderEngine {
   }
 
   pause(): boolean {
-    window.cancelAnimationFrame(this.frameRequestHndl);
+    this.window.cancelAnimationFrame(this.frameRequestHndl);
     return true;
   }
 
@@ -47,7 +50,9 @@ export default class VueKonvaRenderEngine implements IRenderEngine {
     this.snapshot = snapshot;
   }
 
-  private setupStage(canvasSelector: string) {
+  private setupStage(
+    canvasSelector: HTMLDivElement
+  ) {
     const viewportWidth = document.documentElement.clientWidth;
     const viewportHeight = document.documentElement.clientHeight * .95;
     const viewportAspectRatio = viewportWidth / viewportHeight;
@@ -117,7 +122,7 @@ export default class VueKonvaRenderEngine implements IRenderEngine {
   }
 
   private tickDrawLoop() {
-    this.frameRequestHndl = window.requestAnimationFrame((time: number) => {
+    this.frameRequestHndl = this.window.requestAnimationFrame((time: number) => {
       this.drawFrame();
       this.tickDrawLoop();
     });

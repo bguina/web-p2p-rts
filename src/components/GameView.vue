@@ -1,5 +1,5 @@
 <template>
-  <div id="game-view"></div>
+  <div ref="gameView"></div>
 </template>
 
 <script lang="ts">
@@ -11,6 +11,7 @@ import ERenderEngine from "@/game/render/ERenderEngine";
 import Game from "../game/impl/Game";
 import GameEngine from "../game/impl/GameEngine";
 import InputController from "../game/input/impl/InputController";
+import Window from "../window/BrowserWindow";
 import WebRtcNetworkEngine from "../game/net/impl/WebRtcNetworkEngine";
 import VueKonvaRenderEngine from "@/game/render/konva/KonvaRenderEngine";
 
@@ -26,10 +27,12 @@ export default class GameView extends Vue {
       GameEngine,
       InputController,
       Game,
-      "#game-view"
+      Window,
+      this.$refs.gameView as HTMLDivElement
     ).get<IGame>(TYPES.Game);
   }
 }
+
 </script>
 
 <style scoped>

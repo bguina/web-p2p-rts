@@ -1,8 +1,9 @@
 import IGameSnapshot from "../IGameSnapshot";
 
 export default interface IRenderEngine {
-  resume() : boolean;
-  pause() : boolean;
+  readonly name: string
+  resume(): boolean;
+  pause(): boolean;
 
   updateSnapshot(
     uiTree?: string,

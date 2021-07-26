@@ -7,6 +7,7 @@ import IGameEngine from "./game/IGameEngine";
 import IInputController from "./game/input/IInputController";
 import IGame from "./game/IGame";
 import IRenderEngine from "./game/render/IRenderEngine";
+import IWindow from "./window/IWindow";
 
 export default class DiContainer extends Container {
   constructor(
@@ -15,7 +16,8 @@ export default class DiContainer extends Container {
     gameEngineType: interfaces.Newable<IGameEngine>,
     inputControllerType: interfaces.Newable<IInputController>,
     gameType: interfaces.Newable<IGame>,
-    convasSelector: string
+    windowType: interfaces.Newable<IWindow>,
+    convasSelector: HTMLDivElement
   ) {
     super();
     this.bind<IRenderEngine>(DI_TYPES.RenderEngine).to(renderEngineType).inSingletonScope();
@@ -23,6 +25,7 @@ export default class DiContainer extends Container {
     this.bind<IGameEngine>(DI_TYPES.GameEngine).to(gameEngineType).inSingletonScope();
     this.bind<IInputController>(DI_TYPES.InputController).to(inputControllerType).inSingletonScope();
     this.bind<IGame>(DI_TYPES.Game).to(gameType).inSingletonScope();
-    this.bind<string>(DI_TYPES.CanvasSelector).toConstantValue(convasSelector);
+    this.bind<IWindow>(DI_TYPES.Window).to(windowType).inSingletonScope();
+    this.bind<HTMLDivElement>(DI_TYPES.CanvasSelector).toConstantValue(convasSelector);
   }
 }
