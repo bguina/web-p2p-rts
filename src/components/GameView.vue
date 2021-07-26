@@ -1,26 +1,36 @@
 <template>
-  <div class="game-view">
-    <div id="game-canvas"></div>
-  </div>
+  <div id="game-view"></div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import IGame from '@/game/IGame';
-import Game from '@/game/impl/Game';
-import { ERenderEngine } from '@/game/render/ERenderEngine';
+import { Component, Prop, Vue } from "vue-property-decorator";
+import DiContainer from "../inversify.config";
+import TYPES from "../inversify.types";
+import IGame from "@/game/IGame";
+import ERenderEngine from "@/game/render/ERenderEngine";
+import Game from "../game/impl/Game";
+import GameEngine from "../game/impl/GameEngine";
+import InputController from "../game/input/impl/InputController";
+import WebRtcNetworkEngine from "../game/net/impl/WebRtcNetworkEngine";
+import VueKonvaRenderEngine from "@/game/render/konva/KonvaRenderEngine";
 
 @Component
 export default class GameView extends Vue {
   @Prop() engine!: ERenderEngine;
   private game!: IGame;
 
-  mounted() {
-    this.game = new Game(this.engine, '#game-canvas');
+  mounted(): void {
+    this.game = new DiContainer(
+      VueKonvaRenderEngine,
+      WebRtcNetworkEngine,
+      GameEngine,
+      InputController,
+      Game,
+      "#game-view"
+    ).get<IGame>(TYPES.Game);
   }
 }
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
 
+<style scoped>
 </style>

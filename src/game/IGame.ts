@@ -1,5 +1,3 @@
 export default interface IGame {
-  title: string;
-
+  readonly title: string;
 }
-

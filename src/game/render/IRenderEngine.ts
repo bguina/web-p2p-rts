@@ -1,5 +1,11 @@
-import IGameState from "@/game/state/IGameState";
+import IGameSnapshot from "../IGameSnapshot";
 
 export default interface IRenderEngine {
-  update(state: IGameState): void;
+  resume() : boolean;
+  pause() : boolean;
+
+  updateSnapshot(
+    uiTree?: string,
+    snapshot?: IGameSnapshot
+  ): void;
 }

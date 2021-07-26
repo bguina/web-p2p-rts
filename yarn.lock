@@ -4848,6 +4848,11 @@ internal-ip@^4.3.0:
     default-gateway "^4.2.0"
     ipaddr.js "^1.9.0"
 
+inversify@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/inversify/-/inversify-5.1.1.tgz#6fbd668c591337404e005a1946bfe0d802c08730"
+  integrity sha512-j8grHGDzv1v+8T1sAQ+3boTCntFPfvxLCkNcxB1J8qA0lUN+fAlSyYd+RXKvaPRL4AGyPxViutBEJHNXOyUdFQ==
+
 ip-regex@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/ip-regex/-/ip-regex-2.1.0.tgz#fa78bf5d2e6913c911ce9f819ee5146bb6d844e9"
@@ -5359,6 +5364,11 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
+
+konva@^8.1.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/konva/-/konva-8.1.1.tgz#c92c3f81b371947eade7a8f76ee2df34c71b333c"
+  integrity sha512-2jLijU0N2DNJwBoWzwyxHwqx4GLPjTppSD9TU/G49B2MJ8Sf10E7Y0EmuULjYcNDIFsY+3zMt0VFonKNfyz7WA==
 
 launch-editor-middleware@^2.2.1:
   version "2.2.1"
@@ -7047,6 +7057,11 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
+reflect-metadata@^0.1.13:
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
+  integrity sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==
+
 regenerate-unicode-properties@^8.2.0:
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/regenerate-unicode-properties/-/regenerate-unicode-properties-8.2.0.tgz#e5de7111d655e7ba60c057dbe9ff37c87e65cdec"
@@ -8246,6 +8261,11 @@ typescript@~4.1.5:
   version "4.1.6"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.6.tgz#1becd85d77567c3c741172339e93ce2e69932138"
   integrity sha512-pxnwLxeb/Z5SP80JDRzVjh58KsM6jZHRAOtTpS7sXLS4ogXNKC9ANxHHZqLLeVHZN35jCtI4JdmLLbLiC1kBow==
+
+typestate@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/typestate/-/typestate-1.0.6.tgz#be154609eb4fa02136e3e6a0307f53489ffd408b"
+  integrity sha512-XfrrS1MV6Z1weckOvG7B5oFjHSygn1lsGOy9+M/H0JNTxzjQG/sipfQHCp3zdaNv0+tSMutO5rL4SskZtfTY3w==
 
 uglify-js@3.4.x:
   version "3.4.10"
